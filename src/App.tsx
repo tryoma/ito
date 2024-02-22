@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import { themes } from "./theme";
 
 type Participant = {
   id: number;
@@ -8,15 +9,14 @@ type Participant = {
 
 function App() {
   const [theme, setTheme] = useState<string>("");
+  const [subTheme, setSubTheme] = useState<string>("");
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [currentParticipantIndex, setCurrentParticipantIndex] =
     useState<number>(0);
   const [isNumberVisible, setIsNumberVisible] = useState<boolean>(false);
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+  const [isGameDoing, setIsGameDoing] = useState<boolean>(false);
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
-  const [canProceed, setCanProceed] = useState<boolean>(false);
-
-  const themes = ["テーマ1", "テーマ2", "テーマ3"]; // お題のリスト
 
   const generateParticipants = (numParticipants: number) => {
     const newParticipants: Participant[] = [];
@@ -34,7 +34,8 @@ function App() {
 
   const generateTheme = () => {
     const randomIndex = Math.floor(Math.random() * themes.length);
-    setTheme(themes[randomIndex]);
+    setTheme(themes[randomIndex].theme);
+    setSubTheme(themes[randomIndex].sub);
   };
 
   // ゲーム開始ボタンが押されたときの処理
@@ -48,8 +49,8 @@ function App() {
         setCurrentParticipantIndex(0);
         setIsNumberVisible(false);
         setIsGameStarted(true);
+        setIsGameDoing(false);
         setIsGameFinished(false);
-        setCanProceed(true);
       } else {
         alert("参加人数は2〜10の整数を入力してください");
       }
@@ -71,35 +72,77 @@ function App() {
     setIsNumberVisible(true);
   };
 
+  const showDoing = () => {
+    setIsGameDoing(true);
+  };
+
+  const showAnswer = () => {
+    setIsGameFinished(true);
+  };
+
   return (
     <div className="App">
-      {!isGameStarted && <button onClick={startGame}>ゲーム開始</button>}
+      {!isGameStarted && (
+        <button className="btn" onClick={startGame}>
+          ゲーム開始
+        </button>
+      )}
       {isGameStarted && !isGameFinished && (
-        <div>
-          <h1>お題：{theme}</h1>
-          {isNumberVisible && (
-            <p>
-              参加者{participants[currentParticipantIndex].id}:{" "}
-              {participants[currentParticipantIndex].number}
-            </p>
+        <div className="card">
+          <h1>お題</h1>
+          <h2>{theme}</h2>
+          <h3>{subTheme}</h3>
+          {isNumberVisible && !isGameDoing && (
+            <div className="number">
+              <p>参加者{participants[currentParticipantIndex].id}</p>
+              <div className="big-number">{participants[currentParticipantIndex].number}</div>
+            </div>
           )}
-          {!isNumberVisible && <button onClick={showNumber}>数字を表示</button>}
-          {isNumberVisible && (
-            <button onClick={nextParticipant}>次の参加者へ</button>
+          {!isNumberVisible && (
+            <button className="btn show" onClick={showNumber}>
+              数字を表示
+            </button>
+          )}
+          {isNumberVisible &&
+            (currentParticipantIndex < participants.length - 1 ? (
+              <button className="btn next" onClick={nextParticipant}>
+                次の参加者へ
+              </button>
+            ) : (
+              !isGameDoing && (
+                <div>
+                  <button className="btn next" onClick={showDoing}>
+                    ゲームを開始する
+                  </button>
+                </div>
+              )
+            ))}
+          {isGameDoing && (
+            <div>
+              <p className="now">ゲーム中</p>
+              <button className="btn next" onClick={showAnswer}>
+                答えを表示する
+              </button>
+              <p>注意：押したら全員の数字が表示されます。</p>
+            </div>
           )}
         </div>
       )}
       {isGameFinished && (
-        <div>
-          <h1>正解の並び順：</h1>
+        <div className="card">
+          <h1>正解の並び順</h1>
           {participants
             .sort((a, b) => a.number - b.number)
             .map((participant, index) => (
-              <p key={index}>
-                参加者{participant.id}: {participant.number}
-              </p>
+              <div className="number" key={index}>
+                <p>
+                  参加者{participant.id}: {participant.number}
+                </p>
+              </div>
             ))}
-          <button onClick={startGame}>もう一度遊ぶ</button>
+          <button className="btn" onClick={startGame}>
+            もう一度遊ぶ
+          </button>
         </div>
       )}
     </div>
