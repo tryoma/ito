@@ -49,7 +49,7 @@ function App() {
         setIsNumberVisible(false);
         setIsGameStarted(true);
         setIsGameFinished(false);
-        setCanProceed(false);
+        setCanProceed(true);
       } else {
         alert("参加人数は2〜10の整数を入力してください");
       }
@@ -57,14 +57,18 @@ function App() {
   };
 
   // 次の参加者へボタンが押されたときの処理
-  const showAnswer = () => {
-    setIsGameFinished(true);
+  const nextParticipant = () => {
+    if (currentParticipantIndex < participants.length - 1) {
+      setCurrentParticipantIndex(currentParticipantIndex + 1);
+      setIsNumberVisible(false);
+    } else {
+      setIsGameFinished(true);
+    }
   };
 
   // 数字表示ボタンが押されたときの処理
   const showNumber = () => {
     setIsNumberVisible(true);
-    setCanProceed(true);
   };
 
   return (
@@ -80,22 +84,9 @@ function App() {
             </p>
           )}
           {!isNumberVisible && <button onClick={showNumber}>数字を表示</button>}
-          {isNumberVisible &&
-            canProceed &&
-            (currentParticipantIndex < participants.length - 1 ? (
-              <button
-                onClick={() =>
-                  setCurrentParticipantIndex(currentParticipantIndex + 1)
-                }
-              >
-                次の参加者へ
-              </button>
-            ) : (
-              <div>
-                <button onClick={showAnswer}>答えを表示する</button>
-                <p>注意：押したら全員の数字が表示されます。</p>
-              </div>
-            ))}
+          {isNumberVisible && (
+            <button onClick={nextParticipant}>次の参加者へ</button>
+          )}
         </div>
       )}
       {isGameFinished && (
