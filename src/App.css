@@ -1,38 +1,93 @@
+body {
+  margin: 0;
+}
+
+h1 {
+  font-size: 1em;
+  margin: 0.5em 0;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin: 0.1em 0;
+}
+
+h3 {
+  font-size: 0.7em;
+  margin: 0.5em 0;
+}
+
+/* App.css */
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  padding: 1em;
   min-height: 100vh;
+  background: #282c34;
+  color: white;
+  font-size: calc(10px + 2vmin);
+}
+
+.card {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  margin: 2em;
+  padding: 2em;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1em;
+}
+
+.btn {
+  margin-top: 1em;
+  padding: 1em 2em;
+  font-size: 1em;
   color: white;
+  background: #61dafb;
+  border: none;
+  border-radius: 0.3em;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+.btn:hover {
+  background: #b3fdff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn.show {
+  background: #ffa502;
+}
+
+.btn.show:hover {
+  background: #ffc048;
+}
+
+.btn.next {
+  background: #2ed573;
+}
+
+.btn.next:hover {
+  background: #58e892;
+}
+
+.number {
+  margin: 1em;
+  width: 90%;
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.3em;
+  transition: background 0.3s;
+}
+
+.big-number {
+  font-size: 12rem;
+}
+
+.number:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.now {
+  font-size: 3rem;
+  background: #ffa502;
 }
