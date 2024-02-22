@@ -39,15 +39,20 @@ function App() {
 
   // ゲーム開始ボタンが押されたときの処理
   const startGame = () => {
-    const numParticipants = prompt("参加人数を入力してください");
+    const numParticipants = prompt("参加人数を入力してください（2〜10の間で）");
     if (numParticipants) {
-      generateParticipants(Number(numParticipants));
-      generateTheme();
-      setCurrentParticipantIndex(0);
-      setIsNumberVisible(false);
-      setIsGameStarted(true);
-      setIsGameFinished(false);
-      setCanProceed(false);
+      const num = Number(numParticipants);
+      if (num >= 2 && num <= 10 && Number.isInteger(num)) {
+        generateParticipants(num);
+        generateTheme();
+        setCurrentParticipantIndex(0);
+        setIsNumberVisible(false);
+        setIsGameStarted(true);
+        setIsGameFinished(false);
+        setCanProceed(false);
+      } else {
+        alert("参加人数は2〜10の整数を入力してください");
+      }
     }
   };
 
