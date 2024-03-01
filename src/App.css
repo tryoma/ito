@@ -20,7 +20,7 @@ h3 {
 /* App.css */
 .App {
   text-align: center;
-  padding: 1em;
+  padding: 0 1em;
   min-height: 100vh;
   background: #282c34;
   color: white;
@@ -51,7 +51,7 @@ h3 {
   background-color: transparent;
   width: 100%;
   padding: 10px 10px 10px 0;
-  font-size: 1.0em;
+  font-size: 1em;
   border-radius: 0;
   border: none;
   text-align: center;
@@ -131,4 +131,29 @@ h3 {
 .now {
   font-size: 3rem;
   background: #ffa502;
+}
+
+.area {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.btn-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 2em;
+  cursor: pointer;
+}
+
+.image-area {
+  width: 100%;
+  height: auto;
+}
+
+.text-area {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.4em;
 }

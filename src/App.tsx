@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { themes } from './theme';
+import PwaButton from './components/PwaButton';
 
 type Participant = {
   id: number;
@@ -91,6 +92,7 @@ function App() {
 
   return (
     <div className="App">
+      <PwaButton />
       {!isGameStarted && (
         <>
           <p>参加人数</p>
