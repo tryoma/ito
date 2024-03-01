@@ -1,44 +1,40 @@
-import {
-  useState,
-  useEffect,
-  MouseEvent,
-  SetStateAction,
-  Dispatch,
-} from 'react';
+import { useState, useEffect } from 'react';
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => void;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+}
 
 const PwaButton = () => {
-  const [supportsPWA, setSupportsPWA] = useState(false);
-  const [promptInstall, setPromptInstall]: [
-    Event | null,
-    Dispatch<SetStateAction<Event | null>>
-  ] = useState<Event | null>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
 
   useEffect(() => {
-    const handler = (e: Event) => {
-      e.preventDefault();
-      console.log('we are being triggered :D');
-      setSupportsPWA(true);
-      setPromptInstall(e);
-    };
-    window.addEventListener('beforeinstallprompt', handler);
-
-    return () => window.removeEventListener('beforeinstallprompt', handler);
+    window.addEventListener('beforeinstallprompt', (e: Event) => {
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      setIsInstallable(true);
+    });
   }, []);
 
-  const onClick = (evt: MouseEvent<HTMLDivElement>) => {
-    evt.preventDefault();
-    if (promptInstall) {
-      (promptInstall as any).prompt();
+  const onInstallClick = async () => {
+    if (!deferredPrompt) {
+      return;
+    }
+
+    deferredPrompt.prompt();
+    const choiceResult = await deferredPrompt.userChoice;
+    if (choiceResult.outcome === 'accepted') {
+      setDeferredPrompt(null);
+      setIsInstallable(false);
+    } else {
+      setIsInstallable(true);
     }
   };
 
-  if (!supportsPWA) {
-    return null;
-  }
-
-  return (
+  return isInstallable ? (
     <div className="area">
-      <div className="btn-area" onClick={onClick}>
+      <div className="btn-area" onClick={() => void onInstallClick()}>
         <img src="share.png" alt="シェアボタン" className="image-area" />
         <div className="text-area">
           ホームに
@@ -47,7 +43,7 @@ const PwaButton = () => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default PwaButton;
