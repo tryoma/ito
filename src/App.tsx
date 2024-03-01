@@ -95,7 +95,7 @@ function App() {
       <PwaButton />
       {!isGameStarted && (
         <>
-          <p>参加人数</p>
+          <p className='no-margin'>参加人数</p>
           <div className="cp_ipselect">
             <select
               className="cp_sl06"
@@ -125,7 +125,7 @@ function App() {
           <h3>{subTheme}</h3>
           {isNumberVisible && !isGameDoing && (
             <div className="number">
-              <p>参加者{participants[currentParticipantIndex].id}</p>
+              <p className='no-margin'>参加者{participants[currentParticipantIndex].id}</p>
               <div className="big-number">
                 {participants[currentParticipantIndex].number}
               </div>
@@ -168,7 +168,7 @@ function App() {
             .sort((a, b) => a.number - b.number)
             .map((participant, index) => (
               <div className="number" key={index}>
-                <p>
+                <p className='no-margin'>
                   参加者{participant.id}: {participant.number}
                 </p>
               </div>
