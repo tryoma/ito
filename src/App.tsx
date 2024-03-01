@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import "./App.css";
-import { themes } from "./theme";
+import React, { useState } from 'react';
+import './App.css';
+import { themes } from './theme';
 
 type Participant = {
   id: number;
@@ -8,8 +8,8 @@ type Participant = {
 };
 
 function App() {
-  const [theme, setTheme] = useState<string>("");
-  const [subTheme, setSubTheme] = useState<string>("");
+  const [theme, setTheme] = useState<string>('');
+  const [subTheme, setSubTheme] = useState<string>('');
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [currentParticipantIndex, setCurrentParticipantIndex] =
     useState<number>(0);
@@ -17,12 +17,13 @@ function App() {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const [isGameDoing, setIsGameDoing] = useState<boolean>(false);
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
+  const [numParticipants, setNumParticipants] = useState<number>(2);
 
   const generateParticipants = (numParticipants: number) => {
     const newParticipants: Participant[] = [];
     while (newParticipants.length < numParticipants) {
       const randomNumber = Math.floor(Math.random() * 100) + 1;
-      if (!newParticipants.find((p) => p.number === randomNumber)) {
+      if (!newParticipants.find(p => p.number === randomNumber)) {
         newParticipants.push({
           id: newParticipants.length + 1,
           number: randomNumber,
@@ -38,23 +39,31 @@ function App() {
     setSubTheme(themes[randomIndex].sub);
   };
 
+  const changeNumParticipants = (num: number) => {
+    if (num >= 2 && num <= 10 && Number.isInteger(num)) {
+      setNumParticipants(num);
+    } else {
+      alert('参加人数は2〜10の整数を入力してください');
+    }
+  };
+
   // ゲーム開始ボタンが押されたときの処理
   const startGame = () => {
-    const numParticipants = prompt("参加人数を入力してください（2〜10の間で）");
-    if (numParticipants) {
-      const num = Number(numParticipants);
-      if (num >= 2 && num <= 10 && Number.isInteger(num)) {
-        generateParticipants(num);
-        generateTheme();
-        setCurrentParticipantIndex(0);
-        setIsNumberVisible(false);
-        setIsGameStarted(true);
-        setIsGameDoing(false);
-        setIsGameFinished(false);
-      } else {
-        alert("参加人数は2〜10の整数を入力してください");
-      }
-    }
+    generateParticipants(numParticipants);
+    generateTheme();
+    setCurrentParticipantIndex(0);
+    setIsNumberVisible(false);
+    setIsGameStarted(true);
+    setIsGameDoing(false);
+    setIsGameFinished(false);
+  };
+
+  const gotop = () => {
+    window.location.reload();
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    changeNumParticipants(Number(e.target.value));
   };
 
   // 次の参加者へボタンが押されたときの処理
@@ -83,9 +92,29 @@ function App() {
   return (
     <div className="App">
       {!isGameStarted && (
-        <button className="btn" onClick={startGame}>
-          ゲーム開始
-        </button>
+        <>
+          <p>参加人数</p>
+          <div className="cp_ipselect">
+            <select
+              className="cp_sl06"
+              onChange={handleSelectChange}
+              value={numParticipants}
+            >
+              <option value={2}>2人</option>
+              <option value={3}>3人</option>
+              <option value={4}>4人</option>
+              <option value={5}>5人</option>
+              <option value={6}>6人</option>
+              <option value={7}>7人</option>
+              <option value={8}>8人</option>
+              <option value={9}>9人</option>
+              <option value={10}>10人</option>
+            </select>
+          </div>
+          <button className="btn" onClick={startGame}>
+            ゲーム開始
+          </button>
+        </>
       )}
       {isGameStarted && !isGameFinished && (
         <div className="card">
@@ -95,7 +124,9 @@ function App() {
           {isNumberVisible && !isGameDoing && (
             <div className="number">
               <p>参加者{participants[currentParticipantIndex].id}</p>
-              <div className="big-number">{participants[currentParticipantIndex].number}</div>
+              <div className="big-number">
+                {participants[currentParticipantIndex].number}
+              </div>
             </div>
           )}
           {!isNumberVisible && (
@@ -142,6 +173,9 @@ function App() {
             ))}
           <button className="btn" onClick={startGame}>
             もう一度遊ぶ
+          </button>
+          <button className="btn" onClick={gotop}>
+            TOPに戻る
           </button>
         </div>
       )}

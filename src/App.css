@@ -38,6 +38,47 @@ h3 {
   border-radius: 1em;
 }
 
+.cp_ipselect {
+  position: relative;
+  max-width: 30%;
+  margin: 0.5em auto;
+  text-align: center;
+  background-color: rgb(151, 201, 221);
+}
+.cp_sl06 {
+  position: relative;
+  font-family: inherit;
+  background-color: transparent;
+  width: 100%;
+  padding: 10px 10px 10px 0;
+  font-size: 1.0em;
+  border-radius: 0;
+  border: none;
+  text-align: center;
+}
+.cp_sl06:focus {
+  outline: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+.cp_ipselect .cp_sl06 {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.cp_ipselect:after {
+  position: absolute;
+  top: 0.8em;
+  right: 10px;
+  width: 0;
+  height: 0;
+  padding: 0;
+  content: '';
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
 .btn {
   margin-top: 1em;
   padding: 1em 2em;
