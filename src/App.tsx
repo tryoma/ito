@@ -93,9 +93,10 @@ function App() {
   return (
     <div className="App">
       <PwaButton />
+      <h1 className="main-title">itoゲーム</h1>
       {!isGameStarted && (
         <>
-          <p className='no-margin'>参加人数</p>
+          <p className="no-margin">参加人数</p>
           <div className="cp_ipselect">
             <select
               className="cp_sl06"
@@ -120,12 +121,14 @@ function App() {
       )}
       {isGameStarted && !isGameFinished && (
         <div className="card">
-          <h1>お題</h1>
-          <h2>{theme}</h2>
-          <h3>{subTheme}</h3>
+          <p className="title">お題</p>
+          <p className="theme">{theme}</p>
+          <p className="sub-theme">{subTheme}</p>
           {isNumberVisible && !isGameDoing && (
             <div className="number">
-              <p className='no-margin'>参加者{participants[currentParticipantIndex].id}</p>
+              <p className="no-margin">
+                参加者{participants[currentParticipantIndex].id}
+              </p>
               <div className="big-number">
                 {participants[currentParticipantIndex].number}
               </div>
@@ -168,7 +171,7 @@ function App() {
             .sort((a, b) => a.number - b.number)
             .map((participant, index) => (
               <div className="number" key={index}>
-                <p className='no-margin'>
+                <p className="no-margin">
                   参加者{participant.id}: {participant.number}
                 </p>
               </div>
@@ -181,6 +184,37 @@ function App() {
           </button>
         </div>
       )}
+      <div className="how-to-play">
+        <h2 className='how-to-play-title'>遊び方</h2>
+        <p>
+          <span>参加人数を選択して「ゲーム開始」ボタンを押します。</span>
+        </p>
+        <p>
+          <span>
+            参加者はそれぞれ「数字を表示」ボタンを押して数字を確認します。
+          </span>
+        </p>
+        <p>
+          <span>
+            数字を確認したら、「次の参加者へ」ボタンを押して次の参加者に渡します。
+          </span>
+        </p>
+        <p>
+          <span>
+            全員が数字を確認したら、お題について話し合いを行います。この時、数字は他の参加者に教えてはいけません。
+          </span>
+        </p>
+        <p>
+          <span>
+            このゲームは参加者全員の協力ゲームです。数字が低い順に参加者を当てることができれば成功です。
+          </span>
+        </p>
+        <p>
+          <span>
+            お題について話し合いが終わったら、「答えを表示する」ボタンを押して結果を確認します。
+          </span>
+        </p>
+      </div>
     </div>
   );
 }

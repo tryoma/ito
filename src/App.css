@@ -2,17 +2,22 @@ body {
   margin: 0;
 }
 
-h1 {
+.main-title {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.title {
   font-size: 1em;
   margin: 0.5em 0;
 }
 
-h2 {
+.theme {
   font-size: 1.2em;
   margin: 0.1em 0;
 }
 
-h3 {
+.sub-theme {
   font-size: 0.7em;
   margin: 0.5em 0;
 }
@@ -32,10 +37,11 @@ h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2em;
+  margin: 2em auto;
   padding: 2em;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 1em;
+  max-width: 800px;
 }
 
 .cp_ipselect {
@@ -54,6 +60,7 @@ h3 {
   border-radius: 0;
   border: none;
   text-align: center;
+  width: 100%;
 }
 .cp_sl06:focus {
   outline: none;
@@ -159,4 +166,49 @@ h3 {
 
 .no-margin {
   margin: 0;
+}
+
+.how-to-play {
+  max-width: 640px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  counter-reset: paragraphCounter;
+}
+
+.how-to-play-title {
+  text-align: center;
+}
+
+.how-to-play p::before {
+  counter-increment: paragraphCounter; /* カウンターを1増やす */
+  content: counter(paragraphCounter) ". "; /* 表示形式の設定 */
+  font-weight: bold; /* 数字を太字にする（オプション） */
+}
+
+.how-to-play span {
+  display: block;
+  margin-left: 20px; /* 数字との間にスペースを作る */
+}
+
+.how-to-play p::before {
+  float: left; /* 番号を左に浮かせる */
+  margin-left: -10px; 
+}
+
+.how-to-play h2 {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.how-to-play p {
+  color: #495057;
+  line-height: 1.5;
+  margin-bottom: 5px;
 }
